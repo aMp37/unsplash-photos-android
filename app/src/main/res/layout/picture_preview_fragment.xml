@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="image"
+            type="com.example.unsplashphotos.model.UnsplashPhoto" />
+        <variable
+            name="viewModel"
+            type="com.example.unsplashphotos.viewmodel.PicturePreviewViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.github.chrisbanes.photoview.PhotoView
+            android:id="@+id/photoView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@{image.urls.full}" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginRight="15dp"
+            android:clickable="true"
+            android:onClick="@{()->viewModel.onInfoButtonClick(image)}"
+            android:src="@drawable/ic_info_outline_black_24dp"
+            app:backgroundTint="#FFAA00"
+            app:layout_constraintBottom_toBottomOf="@+id/photoView"
+            app:layout_constraintEnd_toEndOf="@+id/photoView" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
