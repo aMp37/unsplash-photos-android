@@ -1,50 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <variable
             name="image"
             type="com.example.unsplashphotos.model.UnsplashPhoto" />
     </data>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:orientation="vertical">
-        <TextView
-            android:layout_marginTop="10dp"
-            android:text="Author"
-            android:textSize="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:text="MockAuthor"
+        <LinearLayout
+            android:id="@+id/bottomSheetLayout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_marginTop="10dp"
-            android:text="Description"
-            android:textSize="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Author"
+                android:textSize="20dp" />
 
-        <TextView
-            android:text="@{image.description.length() != 0 ? image.description : image.altDescription}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MockAuthor" />
 
-        <TextView
-            android:layout_marginTop="10dp"
-            android:text="Likes"
-            android:textSize="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Description"
+                android:textSize="20dp" />
 
-        <TextView
-            android:text="@{String.valueOf(image.likes)}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{image.description.length() != 0 ? image.description : image.altDescription}" />
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Likes"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(image.likes)}" />
+
+        </LinearLayout>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

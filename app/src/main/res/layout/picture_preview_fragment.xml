@@ -19,19 +19,34 @@
             android:id="@+id/photoView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@{image.urls.full}" />
+            android:src="@{image.urls.full}"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp"
+            android:onClick="@{()->viewModel.showButtons(saveButton,infoButton)}"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
+            android:id="@+id/infoButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
             android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
             android:clickable="true"
             android:onClick="@{()->viewModel.onInfoButtonClick(image)}"
             android:src="@drawable/ic_info_outline_black_24dp"
             app:backgroundTint="#FFAA00"
             app:layout_constraintBottom_toBottomOf="@+id/photoView"
             app:layout_constraintEnd_toEndOf="@+id/photoView" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp"
+            android:clickable="true"
+            app:backgroundTint="#FFAA00"
+            app:layout_constraintBottom_toTopOf="@+id/infoButton"
+            app:layout_constraintEnd_toEndOf="@+id/photoView"
+            app:srcCompat="@drawable/ic_save_black_24dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,5 +1,7 @@
 package com.example.unsplashphotos.ui
 
+import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo
 import android.graphics.Picture
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -24,6 +26,7 @@ import com.example.unsplashphotos.repository.UnsplashPhotoRepositoryImpl
 import com.example.unsplashphotos.service.PhotosService
 import com.example.unsplashphotos.util.PhotosRecyclerViewItemDecroator
 import com.example.unsplashphotos.viewmodel.PicturesViewModel
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
@@ -50,6 +53,8 @@ class PicturesFragment() : Fragment(), KodeinAware {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater,R.layout.pictures_fragment,container,false)
+
+
         return binding.root
     }
 
@@ -74,6 +79,13 @@ class PicturesFragment() : Fragment(), KodeinAware {
         })
         setupRecyclerView()
         }
+
+    @SuppressLint("SourceLockedOrientationActivity")
+    override fun onStart() {
+        super.onStart()
+        requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT
+        requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR
+    }
 
     fun setupBinding(){
         binding.fragment = this
