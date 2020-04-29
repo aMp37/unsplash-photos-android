@@ -4,14 +4,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import com.example.unsplashphotos.di.UnsplashPhotos
 import com.example.unsplashphotos.model.UnsplashPhoto
 import com.example.unsplashphotos.service.PhotosService
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.closestKodein
+import org.kodein.di.generic.instance
 
-class UnsplashPhotoRepositoryImpl:UnsplashPhotoRepository {
+class UnsplashPhotoRepositoryImpl(private val mUnsplashPhotosService: PhotosService):UnsplashPhotoRepository, KodeinAware {
     private val mACCESS_KEY = "qm7xuNFuevvyncNnehBLyRvCX4UpaijlyOJxOnIIU8E"
     private val mPER_PAGE = 20
-    private lateinit var mUnsplashPhotoDataSourceFactory: UnsplashPhotoDataSource.Factory
+    private var mUnsplashPhotoDataSourceFactory: UnsplashPhotoDataSource.Factory
     val mPhotosPagedList: LiveData<PagedList<UnsplashPhoto>>
+
+    override val kodein: Kodein by instance()
 
     init{
         val pagedListConfig =PagedList.Config.Builder()
@@ -19,12 +26,12 @@ class UnsplashPhotoRepositoryImpl:UnsplashPhotoRepository {
             .setPageSize(mPER_PAGE)
             .build()
 
-        mUnsplashPhotoDataSourceFactory = UnsplashPhotoDataSource.Factory()
+        mUnsplashPhotoDataSourceFactory = UnsplashPhotoDataSource.Factory(this)
 
         mPhotosPagedList = LivePagedListBuilder<Int,UnsplashPhoto>(mUnsplashPhotoDataSourceFactory,pagedListConfig).build()
     }
 
-    override suspend fun getPhotosPage(page: Int): List<UnsplashPhoto> = PhotosService.retrofitService.getPhotosPage(mACCESS_KEY,page)
+    override suspend fun getPhotosPage(page: Int): List<UnsplashPhoto> = mUnsplashPhotosService.retrofitService.getPhotosPage(mACCESS_KEY,page)
 
     override fun getPhotosPagedList(): LiveData<PagedList<UnsplashPhoto>> {
       return mPhotosPagedList

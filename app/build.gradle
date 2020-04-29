@@ -66,6 +66,11 @@ dependencies {
     def arch_version = "2.1.0"
 
 
+    //kodein
+    def kodeinVersion = "6.5.5"
+    implementation "org.kodein.di:kodein-di-generic-jvm:$kodeinVersion"
+    implementation "org.kodein.di:kodein-di-framework-android-x:$kodeinVersion"
+
     //pictureView
     def pictureViewVersion = "2.3.0"
     implementation "com.github.chrisbanes:PhotoView:$pictureViewVersion"

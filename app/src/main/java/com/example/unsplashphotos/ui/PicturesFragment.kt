@@ -1,13 +1,16 @@
 package com.example.unsplashphotos.ui
 
+import android.graphics.Picture
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -16,19 +19,28 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.unsplashphotos.R
 import com.example.unsplashphotos.adapter.PhotosPagedAdapter
 import com.example.unsplashphotos.databinding.PicturesFragmentBindingImpl
+import com.example.unsplashphotos.repository.UnsplashPhotoRepository
+import com.example.unsplashphotos.repository.UnsplashPhotoRepositoryImpl
+import com.example.unsplashphotos.service.PhotosService
 import com.example.unsplashphotos.util.PhotosRecyclerViewItemDecroator
 import com.example.unsplashphotos.viewmodel.PicturesViewModel
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.closestKodein
+import org.kodein.di.generic.instance
 
 
-class PicturesFragment : Fragment() {
+class PicturesFragment() : Fragment(), KodeinAware {
 
     companion object {
         fun newInstance() =
             PicturesFragment()
     }
 
-    private lateinit var viewModel: PicturesViewModel
+    override val kodein: Kodein by closestKodein()
 
+    private val mPicturesViewModelFactory: PicturesViewModel.Factory by instance()
+    private  val viewModel: PicturesViewModel by viewModels() {mPicturesViewModelFactory}
     private lateinit var binding: PicturesFragmentBindingImpl
 
     private lateinit var mPhotosRecyclerViewAdapter: PhotosPagedAdapter
@@ -43,8 +55,6 @@ class PicturesFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(PicturesViewModel::class.java)
-
         setupBinding()
 
         mPhotosRecyclerViewAdapter = PhotosPagedAdapter(viewModel)

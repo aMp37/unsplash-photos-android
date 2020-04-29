@@ -12,10 +12,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.Exception
 
-class UnsplashPhotoDataSource: PageKeyedDataSource<Int,UnsplashPhoto>() {
+class UnsplashPhotoDataSource(private val mPhotosRepository: UnsplashPhotoRepository): PageKeyedDataSource<Int,UnsplashPhoto>() {
 
     private val FIRST_PAGE = 1
-    private val mPhotosRepository = UnsplashPhotoRepositoryImpl()
 
 
     private val mLoadingState = MutableLiveData<UnsplashPhotoRepository.LoadingState>()
@@ -67,12 +66,12 @@ class UnsplashPhotoDataSource: PageKeyedDataSource<Int,UnsplashPhoto>() {
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, UnsplashPhoto>) {
     }
 
-    class Factory(): DataSource.Factory<Int,UnsplashPhoto>() {
+    class Factory(private val mPhotosRepository: UnsplashPhotoRepository): DataSource.Factory<Int,UnsplashPhoto>() {
 
         val imagesLiveDataSource: MutableLiveData<UnsplashPhotoDataSource> = MutableLiveData()
 
         override fun create(): DataSource<Int, UnsplashPhoto> {
-            return UnsplashPhotoDataSource().also {
+            return UnsplashPhotoDataSource(mPhotosRepository).also {
                 imagesLiveDataSource.postValue(it)
             }
         }
